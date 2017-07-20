@@ -18,14 +18,14 @@ class CoupletSpider(scrapy.Spider):
     def parse_couplets(self, response):
         title = response.css('.articalTitle h2 ::text').extract_first()
         lines = response.css('.articalContent::text, .articalContent *::text').extract()
-        output_file = open('output/' + title + '.txt', 'w')
+        output_file = open('output/' + title + '.txt', 'wb')
         mid = u'〓'
         end = u'◎'
         for line in lines:
             if (not mid in line) or (not end in line):
                 continue
             line = line.replace(end, '').replace('|', '')
-            words = re.split(ur"[\u200b\s]+", line, flags=re.UNICODE)
+            words = re.split(r"[\u200b\s]+", line, flags=re.UNICODE)
             for word in words:
                 if len(word.strip()) == 0:
                     continue
